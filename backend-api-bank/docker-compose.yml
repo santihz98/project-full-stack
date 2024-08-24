@@ -1,29 +1,44 @@
 version: '3.8'
-services:
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: bank_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: userpassword
-      MYSQL_ROOT_PASSWORD: rootpassword
-    networks:
-      - bank_network
 
-  backend:
-    build: .
-    depends_on:
-      - db
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/bank_db
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: userpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: bankdb
+      MYSQL_USER: bankuser
+      MYSQL_PASSWORD: bankpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - bank-network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  springboot-app:
+    build: .
+    container_name: bank-app
     ports:
       - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bankdb
+      SPRING_DATASOURCE_USERNAME: bankuser
+      SPRING_DATASOURCE_PASSWORD: bankpassword
+    depends_on:
+      mysql:
+        condition: service_healthy
     networks:
-      - bank_network
+      - bank-network
 
 networks:
-  bank_network:
+  bank-network:
     driver: bridge
 
+volumes:
+  mysql-data:

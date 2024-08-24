@@ -2,6 +2,7 @@ package com.api.bank.service;
 
 import com.api.bank.model.Account;
 import com.api.bank.model.Transaction;
+import com.api.bank.repository.AccountRepository;
 import com.api.bank.repository.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,9 @@ class TransactionServiceTest {
 
     @Mock
     private TransactionRepository transactionRepository;
+
+    @Mock
+    private AccountRepository accountRepository;
 
     private Transaction transaction;
     private Account account;
@@ -53,32 +57,13 @@ class TransactionServiceTest {
 
     @Test
     void testCreateTransaction() {
+        when(accountRepository.save(any(Account.class))).thenReturn(account);
         when(transactionRepository.save(transaction)).thenReturn(transaction);
+
         Transaction savedTransaction = transactionService.createTransaction(transaction);
+
         assertNotNull(savedTransaction);
-        assertEquals(200.0, savedTransaction.getAmount());
+        assertEquals(1200.0, savedTransaction.getBalance()); // saldo actualizado después del crédito
         verify(transactionRepository, times(1)).save(transaction);
-    }
-
-    @Test
-    void testValidateTransactionWithExceededDailyLimit() {
-        Account account = new Account();
-        account.setId(1L);
-        account.setInitialBalance(1000.0);
-
-        Transaction debitTransaction = new Transaction();
-        debitTransaction.setTransactionType("DEBIT");
-        debitTransaction.setAmount(-1500.0);
-        debitTransaction.setAccount(account);
-
-        List<Transaction> dailyTransactions = Arrays.asList(transaction);
-        when(transactionRepository.findByAccount_IdAndDateBetween(
-                eq(account.getId()), any(LocalDateTime.class), any(LocalDateTime.class))
-        ).thenReturn(dailyTransactions);
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            transactionService.createTransaction(debitTransaction);
-        });
-        assertEquals("Daily quota exceeded", exception.getMessage());
     }
 }

@@ -1,15 +1,15 @@
-# Usar una imagen base de OpenJDK
-FROM openjdk:17-jdk-slim
+# Usar una imagen base de OpenJDK con JDK 17
+FROM openjdk:17-jdk-alpine
 
-# Establecer el directorio de trabajo dentro del contenedor
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiar el archivo JAR del backend al contenedor
+# Copiar el archivo JAR generado en el contenedor
 COPY build/libs/bank-0.0.1-SNAPSHOT.jar app.jar
-COPY wait-for-it.sh /app/wait-for-it.sh
 
-# Exponer el puerto en el que correrá la aplicación
+# Exponer el puerto en el que corre la aplicación
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación
-ENTRYPOINT ["./wait-for-it.sh", "db:3306", "--", "java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
+

@@ -3,6 +3,7 @@ package com.api.bank.service;
 import com.api.bank.exception.ResourceNotFoundException;
 import com.api.bank.model.Account;
 import com.api.bank.model.Transaction;
+import com.api.bank.repository.AccountRepository;
 import com.api.bank.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
     }
@@ -26,13 +30,14 @@ public class TransactionService {
     }
 
     public Transaction createTransaction(Transaction transaction) {
-        validateTransaction(transaction);
+        validateAndProcessTransaction(transaction);
         return transactionRepository.save(transaction);
     }
 
-    private void validateTransaction(Transaction transaction) {
+    private void validateAndProcessTransaction(Transaction transaction) {
         Account account = transaction.getAccount();
 
+        // Obtener el total de débitos del día para validar el límite diario
         double dailyDebitTotal = transactionRepository.findByAccount_IdAndDateBetween(
                         account.getId(),
                         LocalDateTime.now().toLocalDate().atStartOfDay(),
@@ -42,16 +47,37 @@ public class TransactionService {
                 .mapToDouble(Transaction::getAmount)
                 .sum();
 
-        if (transaction.getAmount() < 0) {
+        // Validar tipo de transacción
+        if ("CREDIT".equalsIgnoreCase(transaction.getTransactionType())) {
+            if (transaction.getAmount() <= 0) {
+                throw new IllegalArgumentException("El monto del crédito debe ser positivo");
+            }
+            account.setInitialBalance(account.getInitialBalance() + transaction.getAmount());
+        } else if ("DEBIT".equalsIgnoreCase(transaction.getTransactionType())) {
+            if (transaction.getAmount() > 0) {
+                transaction.setAmount(-transaction.getAmount());
+            }
+
+            // Verificar si se ha excedido el límite diario de retiro antes de validar el saldo
             if (dailyDebitTotal + Math.abs(transaction.getAmount()) > 1000) {
-                throw new IllegalArgumentException("Daily quota exceeded");
+                throw new IllegalArgumentException("Cupo diario Excedido");
             }
+
+            // Verificar si hay saldo suficiente para realizar el débito
             if (account.getInitialBalance() + transaction.getAmount() < 0) {
-                throw new IllegalArgumentException("Balance not available");
+                throw new IllegalArgumentException("Saldo no disponible");
             }
+
+            account.setInitialBalance(account.getInitialBalance() + transaction.getAmount());
+        } else {
+            throw new IllegalArgumentException("Tipo de transacción no soportado");
         }
 
-        transaction.setBalance(account.getInitialBalance() + transaction.getAmount());
+        // Establecer el saldo actualizado en la transacción
+        transaction.setBalance(account.getInitialBalance());
+
+        // Guardar la cuenta actualizada
+        accountRepository.save(account);
     }
 
     public void deleteTransaction(Long id) {
