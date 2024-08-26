@@ -3,6 +3,7 @@ package com.api.bank.service;
 import com.api.bank.model.Account;
 import com.api.bank.model.Client;
 import com.api.bank.repository.AccountRepository;
+import com.api.bank.repository.ClientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,6 +22,9 @@ class AccountServiceTest {
 
     @Mock
     private AccountRepository accountRepository;
+
+    @Mock
+    private ClientRepository clientRepository;
 
     private Account account;
     private Client client;
@@ -50,7 +54,9 @@ class AccountServiceTest {
 
     @Test
     void testCreateAccount() {
+        when(clientRepository.findById(client.getId())).thenReturn(Optional.of(client));
         when(accountRepository.save(account)).thenReturn(account);
+
         Account savedAccount = accountService.createAccount(account);
         assertNotNull(savedAccount);
         assertEquals("Savings", savedAccount.getAccountType());

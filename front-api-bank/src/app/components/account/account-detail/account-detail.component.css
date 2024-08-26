@@ -1,0 +1,100 @@
+/* Container for the accounts table */
+.account-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+
+  .header {
+    margin-bottom: 1rem;
+  }
+  
+  .header h1 {
+    font-size: 1.75rem;
+    color: #2c2a29;
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .search-bar {
+    flex-grow: 1;
+    margin-right: 1rem;
+  }
+  
+  .search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    width: 300px;
+    font-size: 1rem;
+  }
+  
+  .create-button {
+    background-color: #fdc92a;
+    color: #2c2a29;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  
+  .create-button:hover {
+    background-color: #e5b82a;
+  }
+  
+  /* Table styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  /* Table header styles */
+  thead {
+    background-color: #f2f2f2;
+  }
+  
+  th {
+    text-align: left;
+    padding: 12px;
+    font-weight: 600;
+    color: #333333;
+  }
+  
+  /* Table body styles */
+  tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  td {
+    padding: 12px;
+    color: #555555;
+  }
+  
+  /* Button to create a new account */
+  button {
+    background-color: #00C389;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  button:hover {
+    background-color: #00a973;
+  }
+  

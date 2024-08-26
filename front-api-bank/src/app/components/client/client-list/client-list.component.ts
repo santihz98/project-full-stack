@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientService } from '../../../services/client.service';
+import { Client } from '../../../interface/client.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -33,17 +34,17 @@ export class ClientListComponent {
 
   onSubmit() {
     if (this.clientForm.valid) {
-      this.clientService.createClient(this.clientForm.value).subscribe(
-        (response) => {
+      this.clientService.createClient(this.clientForm.value).subscribe({
+        next: (response: Client) => {
           alert('Cliente creado exitosamente');
           this.clientForm.reset();
-          this.closeModal.emit();
           this.clientCreated.emit();
+          this.closeModal.emit();
         },
-        (error) => {
+        error: (error: any) => {
           alert('Hubo un error al crear el cliente');
-        }
-      );
+        },
+      });
     }
   }
 

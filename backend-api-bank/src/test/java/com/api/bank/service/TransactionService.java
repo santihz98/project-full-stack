@@ -11,8 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,6 +36,7 @@ class TransactionServiceTest {
         account = new Account();
         account.setId(1L);
         account.setInitialBalance(1000.0);
+        account.setAvailableBalance(1000.0); // Inicialmente igual al saldo inicial
 
         transaction = new Transaction();
         transaction.setId(1L);
@@ -57,13 +56,14 @@ class TransactionServiceTest {
 
     @Test
     void testCreateTransaction() {
-        when(accountRepository.save(any(Account.class))).thenReturn(account);
+        when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
         when(transactionRepository.save(transaction)).thenReturn(transaction);
 
         Transaction savedTransaction = transactionService.createTransaction(transaction);
 
         assertNotNull(savedTransaction);
         assertEquals(1200.0, savedTransaction.getBalance()); // saldo actualizado después del crédito
-        verify(transactionRepository, times(1)).save(transaction);
+        verify(accountRepository, times(1)).save(account);
+        verify(transactionRepository, times(2)).save(transaction); // Se espera que se llame dos veces
     }
 }

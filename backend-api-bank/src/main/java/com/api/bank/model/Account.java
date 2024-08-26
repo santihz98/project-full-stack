@@ -23,6 +23,8 @@ public class Account {
     @Positive(message = "Initial balance must be positive")
     private double initialBalance;
 
+    private double availableBalance;
+
     private boolean status;
 
     @ManyToOne

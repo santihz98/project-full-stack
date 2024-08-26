@@ -1,1 +1,42 @@
-<p>account-detail works!</p>
+<div class="account-container">
+  <div class="header">
+    <h1>Cuentas</h1>
+  </div>
+  <div class="actions">
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar" class="search-input" />
+    </div>
+    <div>
+      <button class="create-button" (click)="openModal()">Crear cuenta</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Número de Cuenta</th>
+        <th>Tipo de Cuenta</th>
+        <th>Saldo Inicial</th>
+        <th>Estado</th>
+        <th>Cliente ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (account of accounts; track (account)){
+      <tr>
+        <td>{{ account.accountNumber }}</td>
+        <td>{{ account.accountType }}</td>
+        <td>{{ account.initialBalance }}</td>
+        <td>{{ account.status ? "Activo" : "Inactivo" }}</td>
+        <td>{{ account.client.name }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (showModal) {
+<app-account-list
+  (accountCreated)="closeModal()"
+  (cancel)="closeModal()"
+></app-account-list>
+}

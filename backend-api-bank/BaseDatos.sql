@@ -1,11 +1,11 @@
--- Crear la base de datos
+-- Crear la base de datos si no existe
 CREATE DATABASE IF NOT EXISTS bank_db;
 
 -- Usar la base de datos
 USE bank_db;
 
 -- Tabla para Persona (heredada por Cliente)
-CREATE TABLE person (
+CREATE TABLE IF NOT EXISTS person (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     gender VARCHAR(255) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE person (
 );
 
 -- Tabla para Cliente
-CREATE TABLE client (
+CREATE TABLE IF NOT EXISTS client (
     id BIGINT NOT NULL,
     client_id VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -25,19 +25,20 @@ CREATE TABLE client (
     FOREIGN KEY (id) REFERENCES person(id)
 );
 
--- Tabla para Cuenta
-CREATE TABLE account (
+-- Tabla para Cuenta, añadiendo la columna available_balance
+CREATE TABLE IF NOT EXISTS account (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     account_number VARCHAR(255) NOT NULL UNIQUE,
     account_type VARCHAR(255) NOT NULL,
     initial_balance DOUBLE NOT NULL,
+    available_balance DOUBLE NOT NULL,
     status BOOLEAN,
     client_id BIGINT NOT NULL,
     FOREIGN KEY (client_id) REFERENCES client(id)
 );
 
 -- Tabla para Movimientos
-CREATE TABLE transaction (
+CREATE TABLE IF NOT EXISTS transaction (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     date DATETIME NOT NULL,
     transaction_type VARCHAR(255) NOT NULL,
