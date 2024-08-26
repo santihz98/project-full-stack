@@ -1,1 +1,126 @@
-<p>client-detail works!</p>
+<!-- <div class="container">
+  <div class="header">
+    <h1>Clientes</h1>
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Nombre de la aplicación"
+        class="search-input"
+      />
+    </div>
+    <div>
+      <button class="bc-button-secondary bc-button-small" (click)="openModal()">
+        Nuevo
+      </button>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr class="table-header">
+        <th class="table-cell">Nombre</th>
+        <th class="table-cell">Genero</th>
+        <th class="table-cell">Edad</th>
+        <th class="table-cell">Identidicación</th>
+        <th class="table-cell">Telefono</th>
+        <th class="table-cell">Estado</th>
+      </tr>
+    </thead>
+    <tbody class="text-gray-600 text-sm font-light">
+      @for (user of paginatedUser; track trackByFn($index, user)) {
+      <tr class="table-row">
+        <td class="table-cell w-14">
+          <div>{{ user.name }}</div>
+        </td>
+        <td class="table-cell w-16">
+          <div>{{ user.user }}</div>
+        </td>
+        <td class="table-cell w-14">
+          <div>{{ user.email }}</div>
+        </td>
+        <td class="table-cell w-16">
+          <div>{{ user.rol }}</div>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button
+      *ngFor="let page of [].constructor(totalPages()); let i = index"
+      (click)="setPage(i + 1)"
+      [ngClass]="{
+        'active-page': currentPage === i + 1,
+        'inactive-page': currentPage !== i + 1
+      }"
+      class="page-button"
+    >
+      {{ i + 1 }}
+    </button>
+  </div>
+</div>
+
+@if (showEditModal) {
+<app-modal>
+  <app-edit-app (cancel)="closeEditModal()"></app-edit-app>
+</app-modal>
+} @if (showModal){
+<app-modal>
+  <app-add-app (cancel)="closeModal()"></app-add-app>
+</app-modal>
+} @if (showSettingModal) {
+<app-modal>
+  <app-setting-bots (cancel)="closeSettingModal()"></app-setting-bots>
+</app-modal>
+} -->
+
+<div class="container">
+  <div class="header">
+    <h1>Clientes</h1>
+  </div>
+  <div class="actions">
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar" class="search-input" />
+    </div>
+    <div>
+      <button class="create-button" (click)="openCreateClientModal()">
+        Crear cliente
+      </button>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Genero</th>
+        <th>Edad</th>
+        <th>Identificación</th>
+        <th>Dirección</th>
+        <th>Telefono</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (client of clients; track (client)) {
+      <tr>
+        <td>{{ client.name }}</td>
+        <td>{{ client.gender }}</td>
+        <td>{{ client.age }}</td>
+        <td>{{ client.identification }}</td>
+        <td>{{ client.address }}</td>
+        <td>{{ client.phone }}</td>
+        <td>{{ client.status }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (showCreateClientModal) {
+<app-client-list
+  (closeModal)="closeCreateClientModal()"
+  (clientCreated)="onClientCreated()"
+></app-client-list>
+}

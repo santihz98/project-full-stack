@@ -1,1 +1,108 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #2C2A29;
+    --secondary-color: #FFFFFF;
+    --yellow-color: #FDDA24;
+    --green-color: #00C389;
+    --violet-color: #9063CD;
+    --orange-color: #FF7F41;
+    --pink-color: #F5B6CD;
+    --blue-color: #59CBE8;
+    --background-100-color: #F2F2F2;
+    --background-200-color: #FFFFFF;
+    --background-300-color: #00C389;
+    --border-green-color: #00C389;
+  
+    /* Font sizes */
+    --font-size-small: 0.75rem;
+    --font-size-base: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-xlarge: 1.5rem;
+  }
+  
+  body {
+    font-size: var(--font-size-base);
+    color: var(--primary-color);
+    background-color: var(--background-100-color);
+  }
+  
+  h1, .text-xlarge {
+    font-size: var(--font-size-xlarge);
+  }
+  
+  h2, .text-large {
+    font-size: var(--font-size-large);
+  }
+  
+  .text-small {
+    font-size: var(--font-size-small);
+  }
+  
+  .text-primary {
+    color: var(--primary-color);
+  }
+  
+  .text-secondary {
+    color: var(--secondary-color);
+  }
+  
+  .text-yellow {
+    color: var(--yellow-color);
+  }
+  
+  .text-green {
+    color: var(--green-color);
+  }
+  
+  .text-violet {
+    color: var(--violet-color);
+  }
+  
+  .text-orange {
+    color: var(--orange-color);
+  }
+  
+  .text-pink {
+    color: var(--pink-color);
+  }
+  
+  .text-blue {
+    color: var(--blue-color);
+  }
+  
+  .bg-primary {
+    background-color: var(--primary-color);
+  }
+  
+  .bg-secondary {
+    background-color: var(--secondary-color);
+  }
+  
+  .bg-yellow {
+    background-color: var(--yellow-color);
+  }
+  
+  .bg-green {
+    background-color: var(--green-color);
+  }
+  
+  .bg-violet {
+    background-color: var(--violet-color);
+  }
+  
+  .bg-orange {
+    background-color: var(--orange-color);
+  }
+  
+  .bg-pink {
+    background-color: var(--pink-color);
+  }
+  
+  .bg-blue {
+    background-color: var(--blue-color);
+  }
+  
+  .border-green {
+    border-color: var(--border-green-color);
+  }
+  

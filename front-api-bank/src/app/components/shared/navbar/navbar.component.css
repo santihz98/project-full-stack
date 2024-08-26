@@ -1,0 +1,15 @@
+.navbar {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h1 {
+  font-size: 1.75rem; /* Incrementando el tamaño de la fuente */
+  color: #2c2a29;
+  margin: 0;
+  font-weight: bold;
+}
