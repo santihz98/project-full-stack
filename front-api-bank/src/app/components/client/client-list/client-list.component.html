@@ -5,17 +5,13 @@
       <div class="form-group">
         <label for="name">Nombre</label>
         <input id="name" formControlName="name" type="text" />
-        <div
-          *ngIf="
-            clientForm.get('name')?.invalid && clientForm.get('name')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="clientForm.get('name')?.hasError('required')"
-            >Nombre es requerido</small
-          >
+        @if(clientForm.get('name')?.invalid && clientForm.get('name')?.touched){
+        <div>
+          @if(clientForm.get('name')?.hasError('required')){
+          <small class="error">Nombre es requerido</small>
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">
@@ -25,34 +21,26 @@
           <option value="Masculino">Masculino</option>
           <option value="Femenino">Femenino</option>
         </select>
-        <div
-          *ngIf="
-            clientForm.get('gender')?.invalid &&
-            clientForm.get('gender')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="clientForm.get('gender')?.hasError('required')"
-            >Género es requerido</small
-          >
+        @if(clientForm.get('gender')?.invalid &&
+        clientForm.get('gender')?.touched){
+        <div>
+          @if (clientForm.get('gender')?.hasError('required')) {
+          <small class="error">Género es requerido</small>
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">
         <label for="age">Edad</label>
         <input id="age" formControlName="age" type="number" />
-        <div
-          *ngIf="
-            clientForm.get('age')?.invalid && clientForm.get('age')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="clientForm.get('age')?.hasError('required')"
-            >Edad es requerida</small
-          >
+        @if (clientForm.get('age')?.invalid && clientForm.get('age')?.touched) {
+        <div>
+          @if (clientForm.get('age')?.hasError('required')) {
+          <small class="error">Edad es requerida</small>
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">
@@ -62,23 +50,18 @@
           formControlName="identification"
           type="text"
         />
-        <div
-          *ngIf="
-            clientForm.get('identification')?.invalid &&
-            clientForm.get('identification')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="clientForm.get('identification')?.hasError('required')"
-            >Identificación es requerida</small
-          >
-          <small
-            class="error"
-            *ngIf="clientForm.get('identification')?.hasError('minlength')"
+        @if (clientForm.get('identification')?.invalid &&
+        clientForm.get('identification')?.touched) {
+        <div>
+          @if (clientForm.get('identification')?.hasError('required')) {
+          <small class="error">Identificación es requerida</small>
+          } @if (clientForm.get('identification')?.hasError('minlength')) {
+          <small class="error"
             >Identificación debe tener al menos 6 caracteres</small
           >
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">
@@ -94,40 +77,31 @@
       <div class="form-group">
         <label for="clientId">ID del Cliente</label>
         <input id="clientId" formControlName="clientId" type="text" />
-        <div
-          *ngIf="
-            clientForm.get('clientId')?.invalid &&
-            clientForm.get('clientId')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="clientForm.get('clientId')?.hasError('required')"
-            >ID del cliente es requerido</small
-          >
-          <small
-            class="error"
-            *ngIf="clientForm.get('clientId')?.hasError('minlength')"
+        @if (clientForm.get('clientId')?.invalid &&
+        clientForm.get('clientId')?.touched) {
+        <div>
+          @if (clientForm.get('clientId')?.hasError('required')) {
+          <small class="error">ID del cliente es requerido</small>
+          } @if (clientForm.get('clientId')?.hasError('minlength')) {
+          <small class="error" *ngIf=""
             >ID del cliente debe tener al menos 5 caracteres</small
           >
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">
         <label for="password">Contraseña</label>
         <input id="password" formControlName="password" type="password" />
-        <div
-          *ngIf="
-            clientForm.get('password')?.invalid &&
-            clientForm.get('password')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="clientForm.get('password')?.hasError('required')"
-            >Contraseña es requerida</small
-          >
+        @if (clientForm.get('password')?.invalid &&
+        clientForm.get('password')?.touched) {
+        <div>
+          @if (clientForm.get('password')?.hasError('required')) {
+          <small class="error">Contraseña es requerida</small>
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">

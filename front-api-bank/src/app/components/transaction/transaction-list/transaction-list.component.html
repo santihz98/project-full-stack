@@ -10,44 +10,40 @@
           (change)="onClientChange($event)"
         >
           <option value="">Seleccione un cliente</option>
-          <option *ngFor="let client of clients" [value]="client.id">
+          @for (client of clients; track (client)) {
+          <option [value]="client.id">
             {{ client.name }}
           </option>
+          }
         </select>
-        <div
-          *ngIf="
-            transactionForm.get('clientId')?.invalid &&
-            transactionForm.get('clientId')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="transactionForm.get('clientId')?.hasError('required')"
-            >Cliente es requerido</small
-          >
+        @if (transactionForm.get('clientId')?.invalid &&
+        transactionForm.get('clientId')?.touched) {
+        <div>
+          @if (transactionForm.get('clientId')?.hasError('required')) {
+          <small class="error">Cliente es requerido</small>
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">
         <label for="accountId">Cuenta</label>
         <select id="accountId" formControlName="accountId">
           <option value="">Seleccione una cuenta</option>
-          <option *ngFor="let account of filteredAccounts" [value]="account.id">
+          @for (account of filteredAccounts; track (account)) {
+          <option [value]="account.id">
             {{ account.accountNumber }}
           </option>
+          }
         </select>
-        <div
-          *ngIf="
-            transactionForm.get('accountId')?.invalid &&
-            transactionForm.get('accountId')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="transactionForm.get('accountId')?.hasError('required')"
-            >Cuenta es requerida</small
-          >
+        @if (transactionForm.get('accountId')?.invalid &&
+        transactionForm.get('accountId')?.touched) {
+        <div>
+          @if (transactionForm.get('accountId')?.hasError('required')) {
+          <small class="error">Cuenta es requerida</small>
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">
@@ -56,57 +52,42 @@
           <option value="CREDIT">Crédito</option>
           <option value="DEBIT">Débito</option>
         </select>
-        <div
-          *ngIf="
-            transactionForm.get('transactionType')?.invalid &&
-            transactionForm.get('transactionType')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="transactionForm.get('transactionType')?.hasError('required')"
-            >Tipo de transacción es requerido</small
-          >
+        @if (transactionForm.get('transactionType')?.invalid &&
+        transactionForm.get('transactionType')?.touched) {
+        <div>
+          @if (transactionForm.get('transactionType')?.hasError('required')) {
+          <small class="error">Tipo de transacción es requerido</small>
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">
         <label for="amount">Monto</label>
         <input id="amount" formControlName="amount" type="number" />
-        <div
-          *ngIf="
-            transactionForm.get('amount')?.invalid &&
-            transactionForm.get('amount')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="transactionForm.get('amount')?.hasError('required')"
-            >Monto es requerido</small
-          >
-          <small
-            class="error"
-            *ngIf="transactionForm.get('amount')?.hasError('min')"
-            >Monto debe ser mayor a 0</small
-          >
+        @if (transactionForm.get('amount')?.invalid &&
+        transactionForm.get('amount')?.touched) {
+        <div>
+          @if (transactionForm.get('amount')?.hasError('required')) {
+          <small class="error">Monto es requerido</small>
+          } @if (transactionForm.get('amount')?.hasError('min')) {
+          <small class="error">Monto debe ser mayor a 0</small>
+          }
         </div>
+        }
       </div>
 
       <div class="form-group">
         <label for="date">Fecha</label>
         <input id="date" formControlName="date" type="datetime-local" />
-        <div
-          *ngIf="
-            transactionForm.get('date')?.invalid &&
-            transactionForm.get('date')?.touched
-          "
-        >
-          <small
-            class="error"
-            *ngIf="transactionForm.get('date')?.hasError('required')"
-            >Fecha es requerida</small
-          >
+        @if (transactionForm.get('date')?.invalid &&
+        transactionForm.get('date')?.touched) {
+        <div>
+          @if (transactionForm.get('date')?.hasError('required')) {
+          <small class="error" *ngIf="">Fecha es requerida</small>
+          }
         </div>
+        }
       </div>
 
       <div class="button-group">

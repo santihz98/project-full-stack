@@ -5,18 +5,18 @@
       <label for="clientId">Cliente:</label>
       <select id="clientId" formControlName="clientId" required>
         <option value="">Select a client</option>
-        <option *ngFor="let client of clients" [value]="client.id">
+        @for (client of clients; track (client)) {
+        <option [value]="client.id">
           {{ client.name }}
         </option>
+        }
       </select>
-      <div
-        *ngIf="
-          reportForm.get('clientId')?.invalid &&
-          reportForm.get('clientId')?.touched
-        "
-      >
+      @if (reportForm.get('clientId')?.invalid &&
+      reportForm.get('clientId')?.touched) {
+      <div>
         <small class="error">El cliente es requerido</small>
       </div>
+      }
     </div>
 
     <div class="form-group">
@@ -47,8 +47,10 @@
     </button>
   </form>
 
-  <div *ngIf="reportContent">
+  @if (reportContent) {
+  <div>
     <h3>Report Data:</h3>
     <pre>{{ reportContent }}</pre>
   </div>
+  }
 </div>

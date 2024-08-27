@@ -11,9 +11,11 @@
           class="form-control"
           required
         >
-          <option *ngFor="let client of clients" [value]="client.id">
+          @for(client of clients; track (client)){
+          <option [value]="client.id">
             {{ client.name }}
           </option>
+          }
         </select>
       </div>
 
