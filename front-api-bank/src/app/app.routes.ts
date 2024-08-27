@@ -25,6 +25,10 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'reports',
+        loadComponent: () => import('./components/report/report.component'),
+      },
+      {
         path: '',
         redirectTo: 'clients',
         pathMatch: 'full',
