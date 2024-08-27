@@ -16,6 +16,7 @@
         <th>Número de Cuenta</th>
         <th>Tipo de Cuenta</th>
         <th>Saldo Inicial</th>
+        <th>Saldo Disponible</th>
         <th>Estado</th>
         <th>Cliente ID</th>
       </tr>
@@ -26,6 +27,7 @@
         <td>{{ account.accountNumber }}</td>
         <td>{{ account.accountType }}</td>
         <td>{{ account.initialBalance }}</td>
+        <td>{{ account.availableBalance }}</td>
         <td>{{ account.status ? "Activo" : "Inactivo" }}</td>
         <td>{{ account.client.name }}</td>
       </tr>

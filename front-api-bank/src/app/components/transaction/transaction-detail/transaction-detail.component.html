@@ -1,1 +1,53 @@
-<p>transaction-detail works!</p>
+<div class="container">
+  <div class="header">
+    <h1>Movimientos</h1>
+  </div>
+  <div class="actions">
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar" class="search-input" />
+    </div>
+    <div>
+      <button class="create-button" (click)="openCreateTransactionModal()">
+        Crear Movimiento
+      </button>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Cliente</th>
+        <th>Numero de cuenta</th>
+        <th>Tipo</th>
+        <th>Saldo inicial</th>
+        <th>Estado</th>
+        <th>Movimiento</th>
+        <th>Valor</th>
+        <th>Saldo disponible</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (transaction of transactions; track (transaction)) {
+      <tr>
+        <td>{{ transaction.date }}</td>
+        <td>{{ transaction.account.client.name }}</td>
+        <td>{{ transaction.account.accountNumber }}</td>
+        <td>{{ transaction.account.accountType }}</td>
+        <td>{{ transaction.account.initialBalance }}</td>
+        <td>{{ transaction.account.status }}</td>
+        <td>{{ transaction.transactionType }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{{ transaction.balance }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (showCreateTransactionModal) {
+<app-transaction-list
+  (closeModal)="closeCreateTransactionModal()"
+  (transactionCreated)="onTransactionCreated()"
+></app-transaction-list>
+}

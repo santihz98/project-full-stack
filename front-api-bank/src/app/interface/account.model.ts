@@ -5,6 +5,7 @@ export interface Account {
   accountNumber: string;
   accountType: string;
   initialBalance: number;
+  availableBalance?: number;
   status: boolean;
   client: Client;
 }

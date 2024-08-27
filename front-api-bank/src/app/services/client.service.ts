@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Client } from '../interface/client.model';
+import { Account } from '../interface/account.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -9,8 +10,14 @@ import { environment } from '../../environments/environment';
 })
 export class ClientService {
   private apiUrl = `${environment.apiUrl}/clients`;
+  private account = `${environment.apiUrl}/accounts`;
 
   constructor(private http: HttpClient) {}
+
+  // Obtener todas las cuentas de un cliente por ID
+  getClientAccounts(clientId: number): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.account}/${clientId}`);
+  }
 
   // Obtener todos los clientes
   getAllClients(): Observable<Client[]> {

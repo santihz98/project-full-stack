@@ -1,1 +1,126 @@
-<p>transaction-list works!</p>
+<div class="modal">
+  <div class="modal-content">
+    <h2>Crear Transacción</h2>
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="clientId">Cliente</label>
+        <select
+          id="clientId"
+          formControlName="clientId"
+          (change)="onClientChange($event)"
+        >
+          <option value="">Seleccione un cliente</option>
+          <option *ngFor="let client of clients" [value]="client.id">
+            {{ client.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            transactionForm.get('clientId')?.invalid &&
+            transactionForm.get('clientId')?.touched
+          "
+        >
+          <small
+            class="error"
+            *ngIf="transactionForm.get('clientId')?.hasError('required')"
+            >Cliente es requerido</small
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="accountId">Cuenta</label>
+        <select id="accountId" formControlName="accountId">
+          <option value="">Seleccione una cuenta</option>
+          <option *ngFor="let account of filteredAccounts" [value]="account.id">
+            {{ account.accountNumber }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            transactionForm.get('accountId')?.invalid &&
+            transactionForm.get('accountId')?.touched
+          "
+        >
+          <small
+            class="error"
+            *ngIf="transactionForm.get('accountId')?.hasError('required')"
+            >Cuenta es requerida</small
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="transactionType">Tipo de Transacción</label>
+        <select id="transactionType" formControlName="transactionType">
+          <option value="CREDIT">Crédito</option>
+          <option value="DEBIT">Débito</option>
+        </select>
+        <div
+          *ngIf="
+            transactionForm.get('transactionType')?.invalid &&
+            transactionForm.get('transactionType')?.touched
+          "
+        >
+          <small
+            class="error"
+            *ngIf="transactionForm.get('transactionType')?.hasError('required')"
+            >Tipo de transacción es requerido</small
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="amount">Monto</label>
+        <input id="amount" formControlName="amount" type="number" />
+        <div
+          *ngIf="
+            transactionForm.get('amount')?.invalid &&
+            transactionForm.get('amount')?.touched
+          "
+        >
+          <small
+            class="error"
+            *ngIf="transactionForm.get('amount')?.hasError('required')"
+            >Monto es requerido</small
+          >
+          <small
+            class="error"
+            *ngIf="transactionForm.get('amount')?.hasError('min')"
+            >Monto debe ser mayor a 0</small
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="date">Fecha</label>
+        <input id="date" formControlName="date" type="datetime-local" />
+        <div
+          *ngIf="
+            transactionForm.get('date')?.invalid &&
+            transactionForm.get('date')?.touched
+          "
+        >
+          <small
+            class="error"
+            *ngIf="transactionForm.get('date')?.hasError('required')"
+            >Fecha es requerida</small
+          >
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button
+          type="submit"
+          class="button primary"
+          [disabled]="transactionForm.invalid"
+        >
+          Guardar
+        </button>
+        <button type="button" class="button secondary" (click)="onCancel()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
